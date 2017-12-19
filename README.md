@@ -22,9 +22,9 @@
 │   │       ├── container    # 连接actions和store
 │   │       ├── modules      # reducers/constants/actions的集合
 │   │       └── routes **    # 不规则子路由(** 可选择的)
-├── template                 # 模板文件生成build用
+├── assets                   # 模板文件生成build用
 │   ├── static               # 模板文件直接复制过去的文件
-│   ├── assets               # 静态资源文件，比如图片等都从这里引用
+│   ├── template             # 静态资源文件，比如图片等都从这里引用
 │   └──                      # 模板文件用于生成文件的文件
 └── tests                    # 单元测试
 ```

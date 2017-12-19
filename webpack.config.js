@@ -1,5 +1,7 @@
 var webpack = require('webpack');
 var path = require('path');
+const CleanWebpackPlugin = require('clean-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 module.exports = {
     entry: {
         index: [
@@ -13,6 +15,20 @@ module.exports = {
         filename: '[name].bundle.js'
     },
     plugins: [
+        new CopyWebpackPlugin([{
+            from: path.join(__dirname, './src/assets/static'),
+            to: path.join(__dirname, './build'),
+            force: true,
+            toType: 'dir',
+        }]),
+        new CleanWebpackPlugin(
+            ['build'], //匹配删除的文件
+            {
+                root: __dirname,       //根目录
+                verbose: true,        //开启在控制台输出信息
+                dry: false        //启用删除文件
+            }
+        )
     ],
     devtool: "source-map",
     resolve: {
@@ -49,7 +65,7 @@ module.exports = {
             }, {
                 test: /\.(png|jpg)$/,
                 loader: "url-loader?limit=8192"
-              }, {
+            }, {
                 test: /\.css$/,
                 loader: "css-loader"
             }
