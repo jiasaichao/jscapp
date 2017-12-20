@@ -2,6 +2,7 @@ var webpack = require('webpack');
 var path = require('path');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+const htmlPlugin=require('./htmlplugin');
 module.exports = {
     entry: {
         index: [
@@ -10,25 +11,26 @@ module.exports = {
         ]
     },
     output: {
-        path: path.resolve(__dirname, './build'),
+        path: path.resolve(__dirname, '../build/js'),
         publicPath: '/',
-        filename: '[name].bundle.js'
+        filename: '[name].bundle.[chunkhash:8].js'
     },
     plugins: [
         new CopyWebpackPlugin([{
-            from: path.join(__dirname, './src/assets/static'),
-            to: path.join(__dirname, './build'),
+            from: path.join(__dirname, '../src/assets/static'),
+            to: path.join(__dirname, '../build'),
             force: true,
             toType: 'dir',
         }]),
         new CleanWebpackPlugin(
             ['build'], //匹配删除的文件
             {
-                root: __dirname,       //根目录
+                root: path.resolve(__dirname, '../'),       //根目录
                 verbose: true,        //开启在控制台输出信息
                 dry: false        //启用删除文件
             }
-        )
+        ),
+        new htmlPlugin(function(){},function(){})
     ],
     devtool: "source-map",
     resolve: {
@@ -52,13 +54,13 @@ module.exports = {
             // },
             {
                 test: /\.(js|jsx)$/,
-                include: path.resolve(__dirname, './src'),
+                include: path.resolve(__dirname, '../src'),
                 loader: 'babel-loader'
             },
             {
                 test: /\.svg$/,
                 loader: 'svg-sprite-loader',
-                include: path.resolve(__dirname, './src/assets/svg'),
+                include: path.resolve(__dirname, '../src/assets/svg'),
                 // options: {
                 //     runtimeCompat: true
                 // }
