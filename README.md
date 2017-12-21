@@ -35,6 +35,7 @@ npm i -g @storybook/cli
 ```
 ## 启动程序
 * 组件开发`npm run storybook`
+* 第一次运行`npm run dll`，打公共包，加入公共组件变化执行
 * 项目调试`npm run start`(暂时不用)
 * 项目发布开发者版本`npm run dev`
 * 项目发布`npm run build`

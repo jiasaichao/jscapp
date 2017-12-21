@@ -11,7 +11,7 @@ class HtmlPlugin {
         // 监听webpack生命周期里的事件，做相应的处理
         compiler.plugin('done', (stats) => {
             fileDisplay(path.resolve(__dirname, '../src'), (file) => {
-                console.log('路径：' + file)
+                // console.log('路径：' + file)
                 // fs.mkdir('../lineStage/new/aaffa2/', function (err) {
                 //     if (err)
                 //         console.error(err);
@@ -32,7 +32,7 @@ class HtmlPlugin {
         });
         // emit（'编译器'对'生成最终资源'这个事件的监听）
         compiler.plugin("emit", function (compilation, callback) {
-            console.log("编译将要生成文件...");
+            // console.log("编译将要生成文件...");
 
             // compilation.chunks是块的集合（构建后将要输出的文件，即编译之后得到的结果）
             compilation.chunks.forEach(function (chunk) {
@@ -48,7 +48,7 @@ class HtmlPlugin {
                 // });
                 // 最终生成的文件的集合
                 chunk.files.forEach(function (filename) {
-                    console.log('生成的文件'+filename)
+                    // console.log('生成的文件'+filename)
                     // source()可以得到每个文件的源码
                     //var source = compilation.assets[filename].source();
                 });
