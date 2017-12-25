@@ -1,11 +1,13 @@
 import React from 'react';
 import { Flex, Abs, Icon, Image, Page, Placeholder, Text, TouchableFlex } from '../components';
 import PropTypes from 'prop-types';
+import { Button } from 'antd-mobile';
+import 'antd-mobile/dist/antd-mobile.css';
 export function Page1({ }, context) {
     return (
         <Page title='实例页面11'>
             <div>实例页面1</div>
-            <TouchableFlex onTap={()=>{context.router.history.push('page2')}}>去实例页面22</TouchableFlex>
+            <Button onClick={()=>{context.router.history.push('page2')}}>去实例页面22</Button>
         </Page>
     );
 }

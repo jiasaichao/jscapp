@@ -17,6 +17,10 @@ import testmd from '../docs/test.md';
 
 import { Flex, Abs, Icon, Image, Page, Placeholder, Text, TouchableFlex } from '../src/components';
 
+import { Button as Btn } from 'antd-mobile';
+import 'antd-mobile/dist/antd-mobile.css';
+
+
 import { Button, Welcome } from '@storybook/react/demo';
 
 document.getElementById('root').style.height = '100%';
@@ -34,6 +38,7 @@ storiesOf('基础组件', module).addDecorator(withKnobs)
   .add('Page(页面)', withReadme(pagemd, () =>
     <Page headBg={color('headBg', '#108ee9')} headColor={color('headColor', '#fff')} backName={text('backName', '返回')} title={text('title', 'page-sdfsd')}>
       <p>布局在一个100%宽和高，且溢出隐藏的body里，为了方便与统一布sd局</p>
+      <Btn>Start</Btn>
     </Page>
   ))
   .add('Flex(布局)', withReadme(flexmd, () => (
