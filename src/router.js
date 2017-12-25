@@ -2,6 +2,7 @@ import React from 'react'
 import { withRouter, Switch, Route, HashRouter } from 'react-router-dom'
 import { TransitionGroup, CSSTransition } from 'react-transition-group'
 import PropTypes from 'prop-types';
+import { Page1, Page2 } from './demo/test'
 
 export class Router extends React.Component {
     constructor(props) {
@@ -19,7 +20,7 @@ export class Router extends React.Component {
 }
 const App = withRouter(({ location, history }) => {
     const currentKey = location.pathname.split('/')[1] || '/'
-    const timeout = { enter: 300, exit: 300 }
+    const timeout = { enter: 0, exit: 0 }
     const action = history.action;
     //console.log(action);
     let transitionName = '';
@@ -35,8 +36,8 @@ const App = withRouter(({ location, history }) => {
                 <CSSTransition key={currentKey} timeout={timeout} classNames='page-switch' appear>
                     <section>
                         <Switch location={location}>
-                            <Route exact path="/" component={App1} />
-                            <Route exact path="/inputText" component={App2} />
+                            <Route exact path="/" component={Page1} />
+                            <Route exact path="/page2" component={Page2} />
                             <Route exact path="/detail" component={App3} />
                         </Switch>
                     </section>
@@ -45,9 +46,9 @@ const App = withRouter(({ location, history }) => {
         </div>
     )
 })
-function App1({},context) {
+function App1({ }, context) {
     return <div>
-        <div onClick={()=>{context.router.history.push('detail')}}>app2</div>
+        <div onClick={() => { context.router.history.push('detail') }}>app2</div>
         11111111111111111111111
         </div>
 }
