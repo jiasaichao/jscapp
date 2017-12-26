@@ -73,7 +73,10 @@ module.exports = {
                 loader: "url-loader?limit=8192"
             }, {
                 test: /\.css$/,
-                loader: "css-loader"
+                use: [
+                    'style-loader',
+                    'css-loader',
+                ]
             }
             // {
             //     test: /\.(js|jsx)$/,
