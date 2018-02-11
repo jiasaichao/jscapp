@@ -26,7 +26,7 @@ export function Page({ title, backName, headBg = '#108ee9', headColor = '#fff', 
         top = '.9rem';
         head = (
             <Flex HW style={{ height: '.9rem', background: headBg, position: 'relative' }}>
-                <Text label={title} fontSize='.36rem' color={headColor} />
+                <Text label={title} fontSize='.36rem' color={headColor} style={{overflow: 'hidden', textOverflow:'ellipsis', whiteSpace: 'nowrap',width:'80%',textAlign:'center'}}/>
                 <TouchableFlex vertical style={{ height: '100%', position: 'absolute', left: 0, padding: '0 .3rem' }}>
                     <Icon name='arrowBack' color={headColor} width='.44rem' height='.44rem' /> <Text fontSize='.32rem' color={headColor} label={backName} />
                 </TouchableFlex>

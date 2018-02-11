@@ -1,5 +1,6 @@
+import React from 'react';
 import { renderToString } from 'react-dom/server';
-import {Text} from '../src/demo/test';
-const fs = require("fs");
-const path = require('path');
-fs.writeFile(path.resolve(__dirname, '../build/index11.html'),renderToString(Text),function(){});
+import { Static2 } from '../src/demo/static';
+export function render() {
+    return renderToString(<div><Static2 /></div>)
+};
