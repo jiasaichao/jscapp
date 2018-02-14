@@ -2,11 +2,11 @@ const webpack = require('webpack');
 const path = require('path');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
-const htmlPlugin = require('./htmlplugin');
+const htmlPlugin = require('../htmlplugin');
 module.exports = {
     entry: {
         index: [
-            './config/renderstatic.js'
+            './config/static/renderstatic.js'
             // 我们 app 的入口文件
         ]
     },
@@ -72,7 +72,7 @@ module.exports = {
             // },
             {
                 test: /\.(js|jsx)$/,
-                include: [path.resolve(__dirname, '../src'),path.resolve(__dirname, './')],
+                include: [path.resolve(__dirname, '../../src'), path.resolve(__dirname, '../')],
                 loader: 'babel-loader'
             },
             {

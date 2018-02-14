@@ -10,6 +10,12 @@
 </head>
 
 <body>
+    <script>
+        window.onresize = function () {
+            document.querySelector("html").setAttribute("style", "font-size:" + document.body.clientWidth / 7.5 + "px");
+        };
+        document.querySelector("html").setAttribute("style", "font-size:" + document.body.clientWidth / 7.5 + "px");
+    </script>
     <div id="app"></div>
     <script type="text/javascript">
 

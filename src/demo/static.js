@@ -9,7 +9,7 @@ export class Static2 extends React.Component{
     }
     render(){
         return( <Page title='实例页面11'>
-            {this.state.show?<div>实例页面1</div>:null}            
+            {this.state.show?<div>实例页面1</div>:null}
             <TouchableFlex onTap={()=>{this.setState({show:!this.state.show})}}>去实例页面22</TouchableFlex>
         </Page>)
     }

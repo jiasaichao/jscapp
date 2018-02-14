@@ -2,7 +2,7 @@ const webpack = require('webpack');
 const path = require('path');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
-const htmlPlugin = require('./htmlplugin');
+const HtmlPlugin = require('./htmlplugin');
 module.exports = {
     entry: {
         index: [
@@ -30,7 +30,7 @@ module.exports = {
                 dry: false        //启用删除文件
             }
         ),
-        new htmlPlugin(function () { }, function () { }),
+        new HtmlPlugin(function () { }, function () { }),
         new webpack.DllReferencePlugin({
             context: '.',
             manifest: require("../src/assets/template/vendor1.manifest.json"),

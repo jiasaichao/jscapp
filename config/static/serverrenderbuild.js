@@ -609,6 +609,32 @@ var className = {
         return false;
     }()
 };
+/**
+ * 设备信息
+ */
+// const Device = {
+//     /**系统名称:Android,IOS,Other*/
+//     OS: function () {
+//         var u = navigator.userAgent;
+//         if (u.indexOf('Android') > -1 || u.indexOf('Adr') > -1) {
+//             return 'Android';
+//         }
+//         else if (u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/)) {
+//             return 'IOS';
+//         }
+//         else {
+//             return 'Other';
+//         }
+//     }(),
+//     IsMobile: function () {
+//         if ((navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i))) {
+//             return true;
+//         }
+//         else {
+//             return false;
+//         }
+//     }()
+// };
 var Global = { styles: styles, className: className, Device: Device };
 
 exports.Common = Common;
@@ -1446,15 +1472,16 @@ module.exports = __webpack_require__(17);
 var rrr = __webpack_require__(18);
 var fs = __webpack_require__(14);
 var path = __webpack_require__(15);
+var lujing = process.cwd();
 console.log('路径：' + process.cwd());
 var strHtml = rrr.render();
 var ejs = __webpack_require__(33);
 
-// fs.readFile(path.resolve(process.cwd(), '../src/assets/template/index.ejs'),"utf-8",function(err,data){
-//     let text = ejs.render(data,{jslist:chunk.files});
-//     fs.writeFile(path.resolve(process.cwd(), '../build/index.html'),text,function(){});
-// })  
-fs.writeFile(path.resolve(process.cwd(), '../build/index11.html'), strHtml, function (err) {
+// fs.readFile(path.resolve(process.cwd(), '../../src/assets/template/index.ejs'), "utf-8", function (err, data) {
+//     let text = ejs.render(data, { jslist: chunk.files });
+//     fs.writeFile(path.resolve(process.cwd(), '../build/index.html'), text, function () { });
+// })
+fs.writeFile(path.resolve(lujing, './build/staticbuild/index11.html'), strHtml, function (err) {
     console.log(err);
 });
 
@@ -1481,12 +1508,8 @@ var _static = __webpack_require__(29);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function render() {
-    return (0, _server.renderToString)(_react2.default.createElement(
-        'div',
-        null,
-        _react2.default.createElement(_static.Static2, null)
-    ));
-};
+    return (0, _server.renderToString)(_react2.default.createElement(_static.Static2, null));
+}
 
 /***/ }),
 /* 19 */
