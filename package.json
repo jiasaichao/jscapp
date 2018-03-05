@@ -9,6 +9,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "server-render-build": "webpack --config ./config/static/webpack.serverrender.config.js",
     "build-static": "node ./config/static/serverrenderbuild.js",
+    "server-render": "npm run server-render-build && npm run build-static",
     "storybook": "start-storybook -s ./src/assets/static -p 6006",
     "build-storybook": "build-storybook"
   },

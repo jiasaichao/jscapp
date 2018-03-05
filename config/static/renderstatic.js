@@ -10,9 +10,11 @@ const ejs = require("ejs");
 //     let text = ejs.render(data, { jslist: chunk.files });
 //     fs.writeFile(path.resolve(process.cwd(), '../build/index.html'), text, function () { });
 // })
-fs.writeFile(path.resolve(
-    lujing,
-    './build/staticbuild/index11.html')
-    , strHtml, function (err) {
-        console.log(err)
-    });
+strHtml.forEach((item) => {
+    fs.writeFile(path.resolve(
+        lujing,
+        `./build/staticbuild/${item.name}.html`)
+        , item.content, function (err) {
+            console.log(err)
+        });
+});
