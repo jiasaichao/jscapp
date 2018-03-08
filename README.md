@@ -4,7 +4,8 @@
 .
 ├── build                    # 编译后文件所在目录
 │   ├── dev                  # 开发环境编译后目录
-|   └── prod                 # 生产环境编译后目录
+|   ├── prod                 # 生产环境编译后目录
+|   └── static               # 编译后静态文件放置放置到这里
 ├── docs                     # 文档
 ├── src                      # 程序源文件
 │   ├── components           # 全局可复用的表现组件(Presentational Components)
