@@ -12,17 +12,17 @@ export function render() {
     return [
         
         {
-            name: 'Example1',
+            name: 'example1',
             content: renderToString(<Example1 />)
         },
         
         {
-            name: 'Example2',
+            name: 'example2',
             content: renderToString(<Example2 />)
         },
         
         {
-            name: 'Example3',
+            name: 'example3',
             content: renderToString(<Example3 />)
         },
         

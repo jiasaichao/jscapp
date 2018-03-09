@@ -13,12 +13,17 @@ allpage.forEach(function(item){
 module.exports = {
     entry: entry,
     output: {
-        path: path.resolve(__dirname, './'),
+        path: path.resolve(__dirname, '../../build/staticbuild/js'),
         publicPath: '/',
         filename: '[name].js'
     },
     target: 'node',
     plugins: [
+        new webpack.DefinePlugin({
+            // DEVELOPMENTZIP: JSON.stringify(false),
+            // DEVELOPMENT: JSON.stringify(false)
+            SERVERSIDERENDERING:JSON.stringify(true)
+        }),
         // new webpack.optimize.UglifyJsPlugin({
         //     beautify: false,    // 不美化输出
         //     compress: {
@@ -50,6 +55,10 @@ module.exports = {
         new webpack.DllReferencePlugin({
             context: '.',
             manifest: require("../../src/assets/template/vendor1.manifest.json"),
+        }),
+        new webpack.DllReferencePlugin({
+            context: '.',
+            manifest: require("../../src/assets/template/components.manifest.json"),
         })
     ],
     // devtool: "source-map",

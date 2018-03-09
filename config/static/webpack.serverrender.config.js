@@ -49,6 +49,11 @@ module.exports = {
         //     context: '.',
         //     manifest: require("../src/assets/template/vendor1.manifest.json"),
         // })
+        new webpack.DefinePlugin({
+            // DEVELOPMENTZIP: JSON.stringify(false),
+            // DEVELOPMENT: JSON.stringify(false)
+            SERVERSIDERENDERING:JSON.stringify(false)
+        }),
     ],
     // devtool: "source-map",
     resolve: {

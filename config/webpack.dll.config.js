@@ -6,8 +6,8 @@ module.exports = {
         vendor1: [
             'react',
             'react-dom',
-            'react-router-dom',
-            'react-transition-group'
+            // 'react-router-dom',
+            // 'react-transition-group'
             //其他库
             ],
     },

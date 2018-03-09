@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import { Flex, Abs, Icon, Image, Page, Placeholder, Text, TouchableFlex } from '../components';
 export default class Static2 extends React.Component {
     constructor(props) {
@@ -15,4 +16,8 @@ export default class Static2 extends React.Component {
             </Page>
         )
     }
+}
+/*global SERVERSIDERENDERING*/
+if(SERVERSIDERENDERING){
+    ReactDOM.render(<Static2 />, document.getElementById('app'));
 }

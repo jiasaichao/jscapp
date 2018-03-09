@@ -18,7 +18,7 @@ strHtml.forEach((item) => {
     createFolder(curPath);
     let indextmp = fs.readFileSync(path.resolve(lujing, './config/static/template/index.ejs'), 'utf8');
 
-    let text = ejs.render(indextmp, { root: { Content: item.content } });
+    let text = ejs.render(indextmp, { root: { Content: item.content, jsName:item.name } });
     fs.writeFile(curPath, text, function (err) { });
 });
 
