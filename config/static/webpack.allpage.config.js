@@ -1,46 +1,67 @@
 const webpack = require('webpack');
+const fs = require("fs");
 const path = require('path');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
-const HtmlPlugin = require('./htmlplugin');
+const htmlPlugin = require('../htmlplugin');
+let allpage = fs.readdirSync(path.resolve(process.cwd(), './src/static'));
+let entry={};
+allpage.forEach(function(item){
+    entry[item.replace('.js', '')]='./src/static/'+item;
+});
+
 module.exports = {
-    entry: {
-        index: [
-            './src/index.js'
-            // 我们 app 的入口文件
-        ]
-    },
+    entry: entry,
     output: {
-        path: path.resolve(__dirname, '../build/js'),
+        path: path.resolve(__dirname, '../../build/staticbuild/js'),
         publicPath: '/',
-        filename: '[name].bundle.[chunkhash:8].js'
+        filename: '[name].js'
     },
+    target: 'node',
     plugins: [
-        new CopyWebpackPlugin([{
-            from: path.join(__dirname, '../src/assets/static'),
-            to: path.join(__dirname, '../build'),
-            force: true,
-            toType: 'dir',
-        }]),
-        new CleanWebpackPlugin(
-            ['build'], //匹配删除的文件
-            {
-                root: path.resolve(__dirname, '../'),       //根目录
-                verbose: true,        //开启在控制台输出信息
-                dry: false        //启用删除文件
-            }
-        ),
-        new HtmlPlugin(function () { }, function () { }),
+        new webpack.DefinePlugin({
+            // DEVELOPMENTZIP: JSON.stringify(false),
+            // DEVELOPMENT: JSON.stringify(false)
+            SERVERSIDERENDERING:JSON.stringify(true)
+        }),
+        // new webpack.optimize.UglifyJsPlugin({
+        //     beautify: false,    // 不美化输出
+        //     compress: {
+        //         warnings: false, // 不保留警告
+        //         drop_debugger: true, // 不保留调试语句
+        //         drop_console: true // 不保留控制台输出信息
+        //     },
+        //     mangle: {           // 跳过这些，不改变命名
+        //         except: ['$super', '$', 'exports', 'require']
+        //     },
+        //     space_colon: false,
+        //     comments: false     // 不保留注释
+        // })
+        // new CopyWebpackPlugin([{
+        //     from: path.join(__dirname, '../src/assets/static'),
+        //     to: path.join(__dirname, '../build'),
+        //     force: true,
+        //     toType: 'dir',
+        // }]),
+        // new CleanWebpackPlugin(
+        //     ['build'], //匹配删除的文件
+        //     {
+        //         root: path.resolve(__dirname, '../'),       //根目录
+        //         verbose: true,        //开启在控制台输出信息
+        //         dry: false        //启用删除文件
+        //     }
+        // ),
+        // new htmlPlugin(function () { }, function () { }),
         new webpack.DllReferencePlugin({
             context: '.',
-            manifest: require("../src/assets/template/vendor1.manifest.json"),
+            manifest: require("../../src/assets/template/vendor1.manifest.json"),
         }),
         new webpack.DllReferencePlugin({
             context: '.',
-            manifest: require("../src/assets/template/components.manifest.json"),
+            manifest: require("../../src/assets/template/components.manifest.json"),
         })
     ],
-    devtool: "source-map",
+    // devtool: "source-map",
     resolve: {
         // 用于查找模块的目录
         extensions: [
@@ -62,7 +83,7 @@ module.exports = {
             // },
             {
                 test: /\.(js|jsx)$/,
-                include: path.resolve(__dirname, '../src'),
+                include: [path.resolve(__dirname, '../../src'), path.resolve(__dirname, '../')],
                 loader: 'babel-loader'
             },
             {
@@ -77,10 +98,7 @@ module.exports = {
                 loader: "url-loader?limit=8192"
             }, {
                 test: /\.css$/,
-                use: [
-                    'style-loader',
-                    'css-loader',
-                ]
+                loader: "css-loader"
             }
             // {
             //     test: /\.(js|jsx)$/,

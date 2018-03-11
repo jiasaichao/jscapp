@@ -6,8 +6,8 @@ module.exports = {
         vendor1: [
             'react',
             'react-dom',
-            'react-router-dom',
-            'react-transition-group'
+            // 'react-router-dom',
+            // 'react-transition-group'
             //其他库
             ],
     },
@@ -25,7 +25,7 @@ module.exports = {
                 drop_console: true // 不保留控制台输出信息
             },
             mangle: {           // 跳过这些，不改变命名
-                except: ['$super', '$', 'exports', 'require']
+                except: ['$super', '$', 'exports', 'require', '__dirname']
             },
             space_colon: false,
             comments: false     // 不保留注释

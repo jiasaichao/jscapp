@@ -1,6 +1,6 @@
 const fs = require("fs");
 const path = require('path');
-const ejs = require("ejs");  
+const ejs = require("ejs");
 
 class HtmlPlugin {
     constructor(doneCallback, failCallback) {
@@ -52,10 +52,10 @@ class HtmlPlugin {
                     // source()可以得到每个文件的源码
                     //var source = compilation.assets[filename].source();
                 });
-                fs.readFile(path.resolve(__dirname, '../src/assets/template/index.ejs'),"utf-8",function(err,data){
-                    let text = ejs.render(data,{jslist:chunk.files});
-                    fs.writeFile(path.resolve(__dirname, '../build/index.html'),text,function(){});
-                })  
+                fs.readFile(path.resolve(__dirname, '../src/assets/template/index.ejs'), "utf-8", function (err, data) {
+                    let text = ejs.render(data, { jslist: chunk.files.filter((item) => item.substr(item.length - 2, 2)=='js') });
+                    fs.writeFile(path.resolve(__dirname, '../build/index.html'), text, function () { });
+                })
 
             });
 

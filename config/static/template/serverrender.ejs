@@ -1,0 +1,20 @@
+import React from 'react';
+import { renderToString } from 'react-dom/server';
+<% jslist.forEach(function (filename) { 
+    var name=filename.substr(0,1).toUpperCase()+filename.substr(1);
+%>
+        import <%=name%> from '../../src/static/<%=filename%>';
+<%})%>
+
+export function render() {
+    return [
+        <% jslist.forEach(function (filename) { 
+            var name=filename.substr(0,1).toUpperCase()+filename.substr(1);
+        %>
+        {
+            name: '<%=filename%>',
+            content: renderToString(<<%=name%> />)
+        },
+        <%})%>
+    ];
+}
