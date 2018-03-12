@@ -42,6 +42,7 @@
             "functions"
         ],
         "no-self-compare": 2,
+        "no-empty-pattern":0,
         "accessor-pairs": 2,
         "comma-spacing": [
             2,
