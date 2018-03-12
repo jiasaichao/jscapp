@@ -38,6 +38,7 @@
     "@storybook/addon-knobs": "^3.2.18",
     "@storybook/addon-links": "^3.2.18",
     "@storybook/addon-options": "^3.2.18",
+    "@storybook/addon-viewport": "^3.3.15",
     "@storybook/react": "^3.2.18",
     "babel-core": "^6.26.0",
     "babel-eslint": "^8.1.2",
