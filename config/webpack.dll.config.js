@@ -6,10 +6,11 @@ module.exports = {
         vendor1: [
             'react',
             'react-dom',
+            'axios'
             // 'react-router-dom',
             // 'react-transition-group'
             //其他库
-            ],
+        ],
     },
     output: {
         path: path.resolve(__dirname, '../src/assets/static/js'),

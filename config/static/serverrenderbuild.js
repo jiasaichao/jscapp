@@ -371,188 +371,6 @@ module.exports = warning;
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/**
- * Copyright (c) 2013-present, Facebook, Inc.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- */
-
-
-
-if (process.env.NODE_ENV !== 'production') {
-  var invariant = __webpack_require__(4);
-  var warning = __webpack_require__(5);
-  var ReactPropTypesSecret = __webpack_require__(30);
-  var loggedTypeFailures = {};
-}
-
-/**
- * Assert that the values match with the type specs.
- * Error messages are memorized and will only be shown once.
- *
- * @param {object} typeSpecs Map of name to a ReactPropType
- * @param {object} values Runtime values that need to be type-checked
- * @param {string} location e.g. "prop", "context", "child context"
- * @param {string} componentName Name of the component for error messages.
- * @param {?Function} getStack Returns the component stack.
- * @private
- */
-function checkPropTypes(typeSpecs, values, location, componentName, getStack) {
-  if (process.env.NODE_ENV !== 'production') {
-    for (var typeSpecName in typeSpecs) {
-      if (typeSpecs.hasOwnProperty(typeSpecName)) {
-        var error;
-        // Prop type validation may throw. In case they do, we don't want to
-        // fail the render phase where it didn't fail before. So we log it.
-        // After these have been cleaned up, we'll let them throw.
-        try {
-          // This is intentionally an invariant that gets caught. It's the same
-          // behavior as without this statement except with a better message.
-          invariant(typeof typeSpecs[typeSpecName] === 'function', '%s: %s type `%s` is invalid; it must be a function, usually from ' + 'the `prop-types` package, but received `%s`.', componentName || 'React class', location, typeSpecName, typeof typeSpecs[typeSpecName]);
-          error = typeSpecs[typeSpecName](values, typeSpecName, componentName, location, null, ReactPropTypesSecret);
-        } catch (ex) {
-          error = ex;
-        }
-        warning(!error || error instanceof Error, '%s: type specification of %s `%s` is invalid; the type checker ' + 'function must return `null` or an `Error` but returned a %s. ' + 'You may have forgotten to pass an argument to the type checker ' + 'creator (arrayOf, instanceOf, objectOf, oneOf, oneOfType, and ' + 'shape all require an argument).', componentName || 'React class', location, typeSpecName, typeof error);
-        if (error instanceof Error && !(error.message in loggedTypeFailures)) {
-          // Only monitor this failure once because there tends to be a lot of the
-          // same error.
-          loggedTypeFailures[error.message] = true;
-
-          var stack = getStack ? getStack() : '';
-
-          warning(false, 'Failed %s type: %s%s', location, error.message, stack != null ? stack : '');
-        }
-      }
-    }
-  }
-}
-
-module.exports = checkPropTypes;
-
-
-/***/ }),
-/* 7 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/**
- * Copyright (c) 2013-present, Facebook, Inc.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- *
- * @typechecks
- */
-
-
-
-var hyphenate = __webpack_require__(34);
-
-var msPattern = /^ms-/;
-
-/**
- * Hyphenates a camelcased CSS property name, for example:
- *
- *   > hyphenateStyleName('backgroundColor')
- *   < "background-color"
- *   > hyphenateStyleName('MozTransition')
- *   < "-moz-transition"
- *   > hyphenateStyleName('msTransition')
- *   < "-ms-transition"
- *
- * As Modernizr suggests (http://modernizr.com/docs/#prefixed), an `ms` prefix
- * is converted to `-ms-`.
- *
- * @param {string} string
- * @return {string}
- */
-function hyphenateStyleName(string) {
-  return hyphenate(string).replace(msPattern, '-ms-');
-}
-
-module.exports = hyphenateStyleName;
-
-/***/ }),
-/* 8 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-function checkDCE() {
-  /* global __REACT_DEVTOOLS_GLOBAL_HOOK__ */
-  if (
-    typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ === 'undefined' ||
-    typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.checkDCE !== 'function'
-  ) {
-    return;
-  }
-  if (process.env.NODE_ENV !== 'production') {
-    // This branch is unreachable because this function is only called
-    // in production, but the condition is true only in development.
-    // Therefore if the branch is still here, dead code elimination wasn't
-    // properly applied.
-    // Don't change the message. React DevTools relies on it. Also make sure
-    // this message doesn't occur elsewhere in this function, or it will cause
-    // a false positive.
-    throw new Error('^_^');
-  }
-  try {
-    // Verify that the code above has been dead code eliminated (DCE'd).
-    __REACT_DEVTOOLS_GLOBAL_HOOK__.checkDCE(checkDCE);
-  } catch (err) {
-    // DevTools shouldn't crash React, no matter what.
-    // We should still report in case we break this code.
-    console.error(err);
-  }
-}
-
-if (process.env.NODE_ENV === 'production') {
-  // DCE check should happen before ReactDOM bundle executes so that
-  // DevTools can report bad minification during injection.
-  checkDCE();
-  module.exports = __webpack_require__(38);
-} else {
-  module.exports = __webpack_require__(41);
-}
-
-
-/***/ }),
-/* 9 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports.Page = exports.Image = exports.Text = exports.TouchableFlex = exports.Placeholder = exports.Abs = exports.Flex = exports.Icon = undefined;
-
-var _icon = __webpack_require__(21);
-
-var _layout = __webpack_require__(11);
-
-var _touchable = __webpack_require__(22);
-
-var _page = __webpack_require__(43);
-
-exports.Icon = _icon.Icon;
-exports.Flex = _layout.Flex;
-exports.Abs = _layout.Abs;
-exports.Placeholder = _layout.Placeholder;
-exports.TouchableFlex = _touchable.TouchableFlex;
-exports.Text = _layout.Text;
-exports.Image = _layout.Image;
-exports.Page = _page.Page;
-
-/***/ }),
-/* 10 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
 
 
 Object.defineProperty(exports, "__esModule", {
@@ -781,46 +599,284 @@ var className = {
     /**
      * 设备信息
      */
+    // const Device = {
+    //     /**系统名称:Android,IOS,Other*/
+    //     OS: function () {
+    //         //没有这个对象返回node，nonde环境用
+    //         return 'node';
+    //     }(),
+    //     IsMobile: function () {
+    //         return false;
+    //     }()
+    // };
+    /**
+     * 设备信息
+     */
 };var Device = {
     /**系统名称:Android,IOS,Other*/
-    OS: function () {
-        //没有这个对象返回node，nonde环境用
-        return 'node';
-    }(),
-    IsMobile: function () {
-        return false;
-    }()
+    OS: function OS() {
+        if (typeof window === 'undefined') {
+            return 'node';
+        }
+        var u = navigator.userAgent;
+        if (u.indexOf('Android') > -1 || u.indexOf('Adr') > -1) {
+            return 'Android';
+        } else if (u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/)) {
+            return 'IOS';
+        } else {
+            return 'Other';
+        }
+    },
+    IsMobile: function IsMobile() {
+        //兼容node生成静态
+        if (typeof window === 'undefined') {
+            return true;
+        }
+        if (navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 };
+
+var Events = function Events() {
+    var _this3 = this;
+
+    _classCallCheck(this, Events);
+
+    this.clientList = {};
+
+    this.listen = function (key, fn) {
+        if (!_this3.clientList[key]) {
+            _this3.clientList[key] = [];
+        }
+        _this3.clientList[key].push(fn);
+    };
+
+    this.trigger = function (key, params) {
+        var fns = _this3.clientList[key];
+        if (!fns || fns.length === 0) {
+            return false;
+        }
+        fns.forEach(function (item) {
+            item(params);
+        });
+    };
+
+    this.remove = function (key) {
+        var fns = _this3.clientList[key];
+        if (!fns) {
+            return false;
+        }
+        if (!fns) {
+            fns && (fns.length = 0);
+        } else {
+            for (var l = fns.length - 1; l >= 0; l--) {
+                var _fn = fns[l];
+                if (_fn === fns) {
+                    fns.splice(l, 1);
+                }
+            }
+        }
+    };
+}
 /**
- * 设备信息
+ *  监听
  */
-// const Device = {
-//     /**系统名称:Android,IOS,Other*/
-//     OS: function () {
-//         var u = navigator.userAgent;
-//         if (u.indexOf('Android') > -1 || u.indexOf('Adr') > -1) {
-//             return 'Android';
-//         }
-//         else if (u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/)) {
-//             return 'IOS';
-//         }
-//         else {
-//             return 'Other';
-//         }
-//     }(),
-//     IsMobile: function () {
-//         if ((navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i))) {
-//             return true;
-//         }
-//         else {
-//             return false;
-//         }
-//     }()
-// };
-var Global = { styles: styles, className: className, Device: Device };
+
+/**
+ * 触发
+ */
+;
+
+var eventBus = new Events();
+var Global = { styles: styles, className: className, Device: Device, eventBus: eventBus };
 
 exports.Common = Common;
 exports.Global = Global;
+
+/***/ }),
+/* 7 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/**
+ * Copyright (c) 2013-present, Facebook, Inc.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+
+
+if (process.env.NODE_ENV !== 'production') {
+  var invariant = __webpack_require__(4);
+  var warning = __webpack_require__(5);
+  var ReactPropTypesSecret = __webpack_require__(30);
+  var loggedTypeFailures = {};
+}
+
+/**
+ * Assert that the values match with the type specs.
+ * Error messages are memorized and will only be shown once.
+ *
+ * @param {object} typeSpecs Map of name to a ReactPropType
+ * @param {object} values Runtime values that need to be type-checked
+ * @param {string} location e.g. "prop", "context", "child context"
+ * @param {string} componentName Name of the component for error messages.
+ * @param {?Function} getStack Returns the component stack.
+ * @private
+ */
+function checkPropTypes(typeSpecs, values, location, componentName, getStack) {
+  if (process.env.NODE_ENV !== 'production') {
+    for (var typeSpecName in typeSpecs) {
+      if (typeSpecs.hasOwnProperty(typeSpecName)) {
+        var error;
+        // Prop type validation may throw. In case they do, we don't want to
+        // fail the render phase where it didn't fail before. So we log it.
+        // After these have been cleaned up, we'll let them throw.
+        try {
+          // This is intentionally an invariant that gets caught. It's the same
+          // behavior as without this statement except with a better message.
+          invariant(typeof typeSpecs[typeSpecName] === 'function', '%s: %s type `%s` is invalid; it must be a function, usually from ' + 'the `prop-types` package, but received `%s`.', componentName || 'React class', location, typeSpecName, typeof typeSpecs[typeSpecName]);
+          error = typeSpecs[typeSpecName](values, typeSpecName, componentName, location, null, ReactPropTypesSecret);
+        } catch (ex) {
+          error = ex;
+        }
+        warning(!error || error instanceof Error, '%s: type specification of %s `%s` is invalid; the type checker ' + 'function must return `null` or an `Error` but returned a %s. ' + 'You may have forgotten to pass an argument to the type checker ' + 'creator (arrayOf, instanceOf, objectOf, oneOf, oneOfType, and ' + 'shape all require an argument).', componentName || 'React class', location, typeSpecName, typeof error);
+        if (error instanceof Error && !(error.message in loggedTypeFailures)) {
+          // Only monitor this failure once because there tends to be a lot of the
+          // same error.
+          loggedTypeFailures[error.message] = true;
+
+          var stack = getStack ? getStack() : '';
+
+          warning(false, 'Failed %s type: %s%s', location, error.message, stack != null ? stack : '');
+        }
+      }
+    }
+  }
+}
+
+module.exports = checkPropTypes;
+
+
+/***/ }),
+/* 8 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/**
+ * Copyright (c) 2013-present, Facebook, Inc.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ *
+ * @typechecks
+ */
+
+
+
+var hyphenate = __webpack_require__(34);
+
+var msPattern = /^ms-/;
+
+/**
+ * Hyphenates a camelcased CSS property name, for example:
+ *
+ *   > hyphenateStyleName('backgroundColor')
+ *   < "background-color"
+ *   > hyphenateStyleName('MozTransition')
+ *   < "-moz-transition"
+ *   > hyphenateStyleName('msTransition')
+ *   < "-ms-transition"
+ *
+ * As Modernizr suggests (http://modernizr.com/docs/#prefixed), an `ms` prefix
+ * is converted to `-ms-`.
+ *
+ * @param {string} string
+ * @return {string}
+ */
+function hyphenateStyleName(string) {
+  return hyphenate(string).replace(msPattern, '-ms-');
+}
+
+module.exports = hyphenateStyleName;
+
+/***/ }),
+/* 9 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+function checkDCE() {
+  /* global __REACT_DEVTOOLS_GLOBAL_HOOK__ */
+  if (
+    typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ === 'undefined' ||
+    typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.checkDCE !== 'function'
+  ) {
+    return;
+  }
+  if (process.env.NODE_ENV !== 'production') {
+    // This branch is unreachable because this function is only called
+    // in production, but the condition is true only in development.
+    // Therefore if the branch is still here, dead code elimination wasn't
+    // properly applied.
+    // Don't change the message. React DevTools relies on it. Also make sure
+    // this message doesn't occur elsewhere in this function, or it will cause
+    // a false positive.
+    throw new Error('^_^');
+  }
+  try {
+    // Verify that the code above has been dead code eliminated (DCE'd).
+    __REACT_DEVTOOLS_GLOBAL_HOOK__.checkDCE(checkDCE);
+  } catch (err) {
+    // DevTools shouldn't crash React, no matter what.
+    // We should still report in case we break this code.
+    console.error(err);
+  }
+}
+
+if (process.env.NODE_ENV === 'production') {
+  // DCE check should happen before ReactDOM bundle executes so that
+  // DevTools can report bad minification during injection.
+  checkDCE();
+  module.exports = __webpack_require__(38);
+} else {
+  module.exports = __webpack_require__(41);
+}
+
+
+/***/ }),
+/* 10 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.Page = exports.Image = exports.Text = exports.TouchableFlex = exports.Placeholder = exports.Abs = exports.Flex = exports.Icon = undefined;
+
+var _icon = __webpack_require__(21);
+
+var _layout = __webpack_require__(11);
+
+var _touchable = __webpack_require__(22);
+
+var _page = __webpack_require__(43);
+
+exports.Icon = _icon.Icon;
+exports.Flex = _layout.Flex;
+exports.Abs = _layout.Abs;
+exports.Placeholder = _layout.Placeholder;
+exports.TouchableFlex = _touchable.TouchableFlex;
+exports.Text = _layout.Text;
+exports.Image = _layout.Image;
+exports.Page = _page.Page;
 
 /***/ }),
 /* 11 */
@@ -848,7 +904,7 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _common = __webpack_require__(10);
+var _common = __webpack_require__(6);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -1393,7 +1449,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.Icon = Icon;
 
-var _common = __webpack_require__(10);
+var _common = __webpack_require__(6);
 
 var _react = __webpack_require__(0);
 
@@ -1489,7 +1545,7 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _common = __webpack_require__(10);
+var _common = __webpack_require__(6);
 
 var _layout = __webpack_require__(11);
 
@@ -1546,32 +1602,32 @@ var TouchableBase = exports.TouchableBase = function (_Component) {
         };
 
         _this.mouseDown = function (e) {
-            if (_common.Global.Device.IsMobile) return;
+            if (_common.Global.Device.IsMobile()) return;
             _this.start(e);
         };
 
         _this.mouseMove = function (e) {
-            if (_common.Global.Device.IsMobile) return;
+            if (_common.Global.Device.IsMobile()) return;
             _this.move(e);
         };
 
         _this.mouseUp = function (e) {
-            if (_common.Global.Device.IsMobile) return;
+            if (_common.Global.Device.IsMobile()) return;
             _this.end(e);
         };
 
         _this.touchStart = function (e) {
-            if (!_common.Global.Device.IsMobile) return;
+            if (!_common.Global.Device.IsMobile()) return;
             _this.start(e);
         };
 
         _this.touchMove = function (e) {
-            if (!_common.Global.Device.IsMobile) return;
+            if (!_common.Global.Device.IsMobile()) return;
             _this.move(e);
         };
 
         _this.touchEnd = function (e) {
-            if (!_common.Global.Device.IsMobile) return;
+            if (!_common.Global.Device.IsMobile()) return;
             _this.end(e);
         };
 
@@ -1897,7 +1953,7 @@ var path = __webpack_require__(24);
 var lujing = process.cwd();
 // console.log('路径：' + process.cwd());
 var strHtml = rrr.render();
-var ejs = __webpack_require__(46);
+var ejs = __webpack_require__(47);
 
 // fs.readFile(path.resolve(process.cwd(), '../../src/assets/template/index.ejs'), "utf-8", function (err, data) {
 //     let text = ejs.render(data, { jslist: chunk.files });
@@ -1921,7 +1977,9 @@ exists(path.resolve(lujing, './src/assets/static'), path.resolve(lujing, './buil
 function deleteFolder(path) {
     var files = [];
     if (fs.existsSync(path)) {
+        console.log('存在此目录');
         files = fs.readdirSync(path);
+        console.log('文件目录', files);
         files.forEach(function (file, index) {
             var curPath = path + "/" + file;
             if (fs.statSync(curPath).isDirectory()) {
@@ -1932,8 +1990,8 @@ function deleteFolder(path) {
                 fs.unlinkSync(curPath);
             }
         });
-        fs.rmdirSync(path);
-    }
+        // fs.rmdirSync(path);
+    } else {}
 }
 
 function createFolder(to) {
@@ -2028,11 +2086,11 @@ var _example = __webpack_require__(37);
 
 var _example2 = _interopRequireDefault(_example);
 
-var _example3 = __webpack_require__(44);
+var _example3 = __webpack_require__(45);
 
 var _example4 = _interopRequireDefault(_example3);
 
-var _example5 = __webpack_require__(45);
+var _example5 = __webpack_require__(46);
 
 var _example6 = _interopRequireDefault(_example5);
 
@@ -2106,7 +2164,7 @@ var emptyObject = __webpack_require__(3);
 var invariant = __webpack_require__(4);
 var warning = __webpack_require__(5);
 var emptyFunction = __webpack_require__(1);
-var checkPropTypes = __webpack_require__(6);
+var checkPropTypes = __webpack_require__(7);
 
 // TODO: this is special because it gets imported during build.
 
@@ -3500,7 +3558,7 @@ if (process.env.NODE_ENV === 'production') {
  * LICENSE file in the root directory of this source tree.
  */
 
-var k=__webpack_require__(2),r=__webpack_require__(0),aa=__webpack_require__(1),t=__webpack_require__(3),ba=__webpack_require__(7),ca=__webpack_require__(12),da=__webpack_require__(13);
+var k=__webpack_require__(2),r=__webpack_require__(0),aa=__webpack_require__(1),t=__webpack_require__(3),ba=__webpack_require__(8),ca=__webpack_require__(12),da=__webpack_require__(13);
 function w(a){for(var b=arguments.length-1,g="Minified React error #"+a+"; visit http://facebook.github.io/react/docs/error-decoder.html?invariant\x3d"+a,c=0;c<b;c++)g+="\x26args[]\x3d"+encodeURIComponent(arguments[c+1]);b=Error(g+" for the full message or use the non-minified dev environment for full errors and additional helpful warnings.");b.name="Invariant Violation";b.framesToPop=1;throw b;}
 var x={children:!0,dangerouslySetInnerHTML:!0,defaultValue:!0,defaultChecked:!0,innerHTML:!0,suppressContentEditableWarning:!0,suppressHydrationWarning:!0,style:!0};function z(a,b){return(a&b)===b}
 var B={MUST_USE_PROPERTY:1,HAS_BOOLEAN_VALUE:4,HAS_NUMERIC_VALUE:8,HAS_POSITIVE_NUMERIC_VALUE:24,HAS_OVERLOADED_BOOLEAN_VALUE:32,HAS_STRING_BOOLEAN_VALUE:64,injectDOMPropertyConfig:function(a){var b=B,g=a.Properties||{},c=a.DOMAttributeNamespaces||{},h=a.DOMAttributeNames||{};a=a.DOMMutationMethods||{};for(var f in g){C.hasOwnProperty(f)?w("48",f):void 0;var e=f.toLowerCase(),d=g[f];e={attributeName:e,attributeNamespace:null,propertyName:f,mutationMethod:null,mustUseProperty:z(d,b.MUST_USE_PROPERTY),
@@ -3600,10 +3658,10 @@ var _assign = __webpack_require__(2);
 var React = __webpack_require__(0);
 var emptyFunction = __webpack_require__(1);
 var emptyObject = __webpack_require__(3);
-var hyphenateStyleName = __webpack_require__(7);
+var hyphenateStyleName = __webpack_require__(8);
 var memoizeStringOnly = __webpack_require__(12);
 var warning = __webpack_require__(5);
-var checkPropTypes = __webpack_require__(6);
+var checkPropTypes = __webpack_require__(7);
 var camelizeStyleName = __webpack_require__(14);
 var stream = __webpack_require__(13);
 
@@ -6222,11 +6280,13 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactDom = __webpack_require__(8);
+var _reactDom = __webpack_require__(9);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
-var _components = __webpack_require__(9);
+var _components = __webpack_require__(10);
+
+var _common = __webpack_require__(6);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -6253,8 +6313,6 @@ var Static2 = function (_React$Component) {
     _createClass(Static2, [{
         key: 'render',
         value: function render() {
-            var _this2 = this;
-
             return _react2.default.createElement(
                 _components.Page,
                 { title: '\u5B9E\u4F8B\u9875\u9762001' },
@@ -6266,7 +6324,7 @@ var Static2 = function (_React$Component) {
                 _react2.default.createElement(
                     _components.TouchableFlex,
                     { onTap: function onTap() {
-                            _this2.setState({ show: !_this2.state.show });
+                            window.location = '$dfqparam$' + JSON.stringify({ data: { url: ['example2.html', 'js/vendor1.js', 'js/components.js', 'js/example2.js'], title: '第二个页面' }, type: 1 });
                         } },
                     '\u53BB\u5B9E\u4F8B\u9875\u976222'
                 )
@@ -6276,12 +6334,54 @@ var Static2 = function (_React$Component) {
 
     return Static2;
 }(_react2.default.Component);
+
+var GlobalComponent = function (_React$Component2) {
+    _inherits(GlobalComponent, _React$Component2);
+
+    function GlobalComponent(props) {
+        _classCallCheck(this, GlobalComponent);
+
+        return _possibleConstructorReturn(this, (GlobalComponent.__proto__ || Object.getPrototypeOf(GlobalComponent)).call(this, props));
+    }
+
+    _createClass(GlobalComponent, [{
+        key: 'render',
+        value: function render() {
+            _react2.default.createElement('div', null);
+        }
+    }]);
+
+    return GlobalComponent;
+}(_react2.default.Component);
+
+var App = function (_React$Component3) {
+    _inherits(App, _React$Component3);
+
+    function App(props) {
+        _classCallCheck(this, App);
+
+        return _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this, props));
+    }
+
+    _createClass(App, [{
+        key: 'render',
+        value: function render() {
+            return _react2.default.createElement(
+                'div',
+                { style: { height: '100%', width: '100%' } },
+                _react2.default.createElement(Static2, null)
+            );
+        }
+    }]);
+
+    return App;
+}(_react2.default.Component);
 /*global SERVERSIDERENDERING*/
 
 
-exports.default = Static2;
+exports.default = App;
 if (false) {
-    _reactDom2.default.render(_react2.default.createElement(Static2, null), document.getElementById('app'));
+    _reactDom2.default.render(_react2.default.createElement(App, null), document.getElementById('app'));
 }
 
 /***/ }),
@@ -6610,8 +6710,8 @@ var shallowEqual = __webpack_require__(18);
 var containsNode = __webpack_require__(19);
 var focusNode = __webpack_require__(20);
 var emptyObject = __webpack_require__(3);
-var checkPropTypes = __webpack_require__(6);
-var hyphenateStyleName = __webpack_require__(7);
+var checkPropTypes = __webpack_require__(7);
+var hyphenateStyleName = __webpack_require__(8);
 var camelizeStyleName = __webpack_require__(14);
 
 /**
@@ -22102,13 +22202,13 @@ var icons = exports.icons = {
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.Page1 = undefined;
+exports.Page = exports.Page1 = undefined;
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-exports.Page = Page;
+exports.Page2 = Page2;
 
 var _react = __webpack_require__(0);
 
@@ -22119,6 +22219,8 @@ var _layout = __webpack_require__(11);
 var _icon = __webpack_require__(21);
 
 var _touchable = __webpack_require__(22);
+
+var _baseprops = __webpack_require__(44);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -22151,7 +22253,76 @@ var Page1 = exports.Page1 = function (_React$Component) {
     return Page1;
 }(_react2.default.Component);
 
-function Page(_ref) {
+var Page = exports.Page = function (_React$Component2) {
+    _inherits(Page, _React$Component2);
+
+    function Page() {
+        _classCallCheck(this, Page);
+
+        return _possibleConstructorReturn(this, (Page.__proto__ || Object.getPrototypeOf(Page)).apply(this, arguments));
+    }
+
+    _createClass(Page, [{
+        key: 'render',
+        value: function render() {
+            var _props = this.props,
+                title = _props.title,
+                back = _props.back,
+                _props$headBg = _props.headBg,
+                headBg = _props$headBg === undefined ? '#108ee9' : _props$headBg,
+                _props$headColor = _props.headColor,
+                headColor = _props$headColor === undefined ? '#fff' : _props$headColor,
+                _props$bg = _props.bg,
+                bg = _props$bg === undefined ? '' : _props$bg,
+                style = _props.style,
+                children = _props.children,
+                _props$onBack = _props.onBack,
+                onBack = _props$onBack === undefined ? function () {} : _props$onBack;
+
+            var styles = _extends({ position: 'absolute', top: 0, right: 0, bottom: 0, left: 0, overflow: 'hidden' }, style);
+            if (bg) {
+                styles.background = bg;
+            }
+            /**
+             * 内容距离顶部距离
+             */
+            var top = 0;
+            var head = null;
+
+            if (title) {
+                top = '.9rem';
+                head = _react2.default.createElement(
+                    _layout.Flex,
+                    { HW: true, style: { height: '.9rem', background: headBg, position: 'relative' } },
+                    _react2.default.createElement(_layout.Text, { label: title, fontSize: '.36rem', color: headColor, style: { overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', width: '80%', textAlign: 'center' } }),
+                    _react2.default.createElement(
+                        _touchable.TouchableFlex,
+                        { vertical: true, style: { height: '100%', position: 'absolute', left: 0, padding: '0 .3rem' } },
+                        _react2.default.createElement(_icon.Icon, { name: 'arrowBack', color: headColor, width: '.44rem', height: '.44rem' }),
+                        ' ',
+                        _react2.default.createElement(_layout.Text, { fontSize: '.32rem', color: headColor, label: back })
+                    ),
+                    _react2.default.createElement(_layout.Flex, { vertical: true, style: { height: '100%', position: 'absolute', right: '.3rem' } })
+                );
+            }
+            /**#endregion "This is the code to be collapsed" */
+            return _react2.default.createElement(
+                'div',
+                { style: styles },
+                head,
+                _react2.default.createElement(
+                    'div',
+                    { style: { width: '100%', overflowX: 'hidden', overflowY: 'scroll', WebkitOverflowScrolling: 'touch', willChange: 'scroll-position', position: 'absolute', bottom: 0, top: top } },
+                    children
+                )
+            );
+        }
+    }]);
+
+    return Page;
+}(_react2.default.Component);
+
+function Page2(_ref) {
     var title = _ref.title,
         backName = _ref.backName,
         _ref$headBg = _ref.headBg,
@@ -22209,6 +22380,15 @@ function Page(_ref) {
 "use strict";
 
 
+var _react = __webpack_require__(0);
+
+/***/ }),
+/* 45 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
@@ -22219,11 +22399,11 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactDom = __webpack_require__(8);
+var _reactDom = __webpack_require__(9);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
-var _components = __webpack_require__(9);
+var _components = __webpack_require__(10);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -22282,7 +22462,7 @@ if (false) {
 }
 
 /***/ }),
-/* 45 */
+/* 46 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -22298,11 +22478,11 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactDom = __webpack_require__(8);
+var _reactDom = __webpack_require__(9);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
-var _components = __webpack_require__(9);
+var _components = __webpack_require__(10);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -22361,7 +22541,7 @@ if (false) {
 }
 
 /***/ }),
-/* 46 */
+/* 47 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -22413,10 +22593,10 @@ if (false) {
 
 var fs = __webpack_require__(23);
 var path = __webpack_require__(24);
-var utils = __webpack_require__(47);
+var utils = __webpack_require__(48);
 
 var scopeOptionWarned = false;
-var _VERSION_STRING = __webpack_require__(48).version;
+var _VERSION_STRING = __webpack_require__(49).version;
 var _DEFAULT_DELIMITER = '%';
 var _DEFAULT_LOCALS_NAME = 'locals';
 var _NAME = 'ejs';
@@ -23234,7 +23414,7 @@ if (typeof window != 'undefined') {
 
 
 /***/ }),
-/* 47 */
+/* 48 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -23405,7 +23585,7 @@ exports.cache = {
 
 
 /***/ }),
-/* 48 */
+/* 49 */
 /***/ (function(module, exports) {
 
 module.exports = {"_args":[["ejs@2.5.7","F:\\aa\\jscapp"]],"_development":true,"_from":"ejs@2.5.7","_id":"ejs@2.5.7","_inBundle":false,"_integrity":"sha1-zIcsFoiArjxxiXYv1f/ACJbJUYo=","_location":"/ejs","_phantomChildren":{},"_requested":{"type":"version","registry":true,"raw":"ejs@2.5.7","name":"ejs","escapedName":"ejs","rawSpec":"2.5.7","saveSpec":null,"fetchSpec":"2.5.7"},"_requiredBy":["#DEV:/"],"_resolved":"http://registry.npm.taobao.org/ejs/download/ejs-2.5.7.tgz","_spec":"2.5.7","_where":"F:\\aa\\jscapp","author":{"name":"Matthew Eernisse","email":"mde@fleegix.org","url":"http://fleegix.org"},"bugs":{"url":"https://github.com/mde/ejs/issues"},"contributors":[{"name":"Timothy Gu","email":"timothygu99@gmail.com","url":"https://timothygu.github.io"}],"dependencies":{},"description":"Embedded JavaScript templates","devDependencies":{"browserify":"^13.0.1","eslint":"^3.0.0","git-directory-deploy":"^1.5.1","istanbul":"~0.4.3","jake":"^8.0.0","jsdoc":"^3.4.0","lru-cache":"^4.0.1","mocha":"^3.0.2","uglify-js":"^2.6.2"},"engines":{"node":">=0.10.0"},"homepage":"https://github.com/mde/ejs","keywords":["template","engine","ejs"],"license":"Apache-2.0","main":"./lib/ejs.js","name":"ejs","repository":{"type":"git","url":"git://github.com/mde/ejs.git"},"scripts":{"coverage":"istanbul cover node_modules/mocha/bin/_mocha","devdoc":"jake doc[dev]","doc":"jake doc","lint":"eslint \"**/*.js\" Jakefile","test":"jake test"},"version":"2.5.7"}

@@ -40,6 +40,7 @@ npm i -g @storybook/cli
 * 项目调试`npm run start`(暂时不用)
 * 项目发布开发者版本`npm run dev`
 * 项目发布`npm run build`
+* 项目发布静态打包`npm run server-render`
 ## 环境配置
 [React开发，在VS Code中配置ESLint, Prettier, and Flow](http://www.zcfy.cc/article/configure-eslint-prettier-and-flow-in-vs-code-for-react-development-2962.html)
 ### ESLint 代码检查
@@ -48,3 +49,14 @@ npm i -g @storybook/cli
 `npm install eslint --save-dev`
 3. 配置ESLint(eslintrc.js)    
 [官方文档](http://eslint.cn/docs/user-guide/configuring)
+### 页面预览地址
+http://localhost:6006/iframe.html?selectedKind=%E5%9F%BA%E7%A1%80%E7%BB%84%E4%BB%B6&selectedStory=Page%28%E9%A1%B5%E9%9D%A2%29
+### 布局规范
+* 布局方式
+所有布局采用Flex布局方式
+* 语义化
+Page 每个页面只有一个
+Module 每个页面多个，删除不会影响页面布局，复制到其他页面Page下面可以直接使用
+Item 重复性的东西，如需要map循环的
+* 布局方法
+ 1. 多列循环布局

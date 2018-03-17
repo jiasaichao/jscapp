@@ -16,9 +16,10 @@ import carouselmd from '../docs/components/carousel.md';
 import testmd from '../docs/test.md';
 
 import { Flex, Abs, Icon, Image, Page, Placeholder, Text, TouchableFlex } from '../src/components';
+import { Popup } from '../src/components/popup';
 
-import { Button as Btn } from 'antd-mobile';
-import 'antd-mobile/dist/antd-mobile.css';
+// import { Button as Btn } from 'antd-mobile';
+// import 'antd-mobile/dist/antd-mobile.css';
 
 
 import { Button, Welcome } from '@storybook/react/demo';
@@ -36,9 +37,9 @@ storiesOf('欢迎使用', module).addDecorator(withKnobs)
 
 storiesOf('基础组件', module).addDecorator(withKnobs)
   .add('Page(页面)', withReadme(pagemd, () =>
-    <Page headBg={color('headBg', '#108ee9')} headColor={color('headColor', '#fff')} backName={text('backName', '返回')} title={text('title', 'page-sdfsd')}>
+    <Page headBg={color('headBg', '#108ee9')} headColor={color('headColor', '#fff')} back={text('back', '返回')} title={text('title', 'page-sdfsd')}>
       <p>布局在一个100%宽和高，且溢出隐藏的body里，为了方便与统一布sd局</p>
-      <Btn>Start</Btn>
+
     </Page>
   ))
   .add('Flex(布局)', withReadme(flexmd, () => (
@@ -117,6 +118,11 @@ storiesOf('基础组件', module).addDecorator(withKnobs)
         <ListIcon name='shouye' remarks='首页' />
         <ListIcon name='wode' remarks='我的' />
       </Flex>
+    </Page>
+  )))
+  .add('Modal(弹窗)', withReadme(textmd, () => (
+    <Page bg='#E6E6E6'>
+      <Popup title='标题士大夫' />
     </Page>
   )));
 

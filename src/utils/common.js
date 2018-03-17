@@ -16,7 +16,7 @@ class Common {
         name.forEach(function (value) {
             value.split(' ').forEach(function (classNameItem) {
                 if (classNameItem !== '') {
-                    refStr+=' '+classNameItem;
+                    refStr += ' ' + classNameItem;
                 }
             });
         });
@@ -90,19 +90,19 @@ const styles = {
     spjzcolumn: { display: "flex", alignItems: "center", flexDirection: 'column' },
     /**绝对定位，不设置的项填写null*/
     absolute:
-    /**
-     * 绝对定位，不设置的项填写null
-    * @param t top值
-    */
-    (t, r, b, l) => {
-        //console.log(t !== null);
-        let ret = Common.prepareStyles({ position: 'absolute' });
-        if (t !== null) { ret.merge({ top: t }) }
-        if (r !== null) { ret.merge({ right: r }) }
-        if (b !== null) { ret.merge({ bottom: b }) }
-        if (l !== null) { ret.merge({ left: l }) }
-        return ret.o;
-    },
+        /**
+         * 绝对定位，不设置的项填写null
+        * @param t top值
+        */
+        (t, r, b, l) => {
+            //console.log(t !== null);
+            let ret = Common.prepareStyles({ position: 'absolute' });
+            if (t !== null) { ret.merge({ top: t }) }
+            if (r !== null) { ret.merge({ right: r }) }
+            if (b !== null) { ret.merge({ bottom: b }) }
+            if (l !== null) { ret.merge({ left: l }) }
+            return ret.o;
+        },
 
     create: Common.prepareStyles,
     /**去掉手指长按出现选择文字*/
@@ -146,44 +146,95 @@ const className = {
 /**
  * 设备信息
  */
-const Device = {
-    /**系统名称:Android,IOS,Other*/
-    OS: function () {
-        //没有这个对象返回node，nonde环境用
-        return 'node';
-    }(),
-    IsMobile: function () {
-        return false;
-    }()
-};
-/**
- * 设备信息
- */
 // const Device = {
 //     /**系统名称:Android,IOS,Other*/
 //     OS: function () {
-//         var u = navigator.userAgent;
-//         if (u.indexOf('Android') > -1 || u.indexOf('Adr') > -1) {
-//             return 'Android';
-//         }
-//         else if (u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/)) {
-//             return 'IOS';
-//         }
-//         else {
-//             return 'Other';
-//         }
+//         //没有这个对象返回node，nonde环境用
+//         return 'node';
 //     }(),
 //     IsMobile: function () {
-//         if ((navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i))) {
-//             return true;
-//         }
-//         else {
-//             return false;
-//         }
+//         return false;
 //     }()
 // };
-const Global = { styles, className, Device };
+/**
+ * 设备信息
+ */
+const Device = {
+    /**系统名称:Android,IOS,Other*/
+    OS: function () {
+        if (typeof window === 'undefined') {
+            return 'node';
+        }
+        var u = navigator.userAgent;
+        if (u.indexOf('Android') > -1 || u.indexOf('Adr') > -1) {
+            return 'Android';
+        }
+        else if (u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/)) {
+            return 'IOS';
+        }
+        else {
+            return 'Other';
+        }
+    },
+    IsMobile: function () {
+        //兼容node生成静态
+        if (typeof window === 'undefined') {
+            return true;
+        }
+        if ((navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i))) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+};
 
+class Events {
+    constructor() {
+
+    }
+    clientList = {}
+    /**
+     *  监听
+     */
+    listen = (key, fn) => {
+        if (!this.clientList[key]) {
+            this.clientList[key] = [];
+        }
+        this.clientList[key].push(fn);
+    }
+    /**
+     * 触发
+     */
+    trigger = (key, params) => {
+        let fns = this.clientList[key];
+        if (!fns || fns.length === 0) {
+            return false;
+        }
+        fns.forEach((item) => {
+            item(params);
+        });
+    }
+    remove = (key) => {
+        var fns = this.clientList[key];
+        if (!fns) {
+            return false;
+        }
+        if (!fns) {
+            fns && (fns.length = 0);
+        } else {
+            for (var l = fns.length - 1; l >= 0; l--) {
+                var _fn = fns[l];
+                if (_fn === fns) {
+                    fns.splice(l, 1);
+                }
+            }
+        }
+    }
+}
+const eventBus = new Events();
+const Global = { styles, className, Device, eventBus };
 
 export { Common };
 export { Global };

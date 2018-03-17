@@ -50,9 +50,8 @@ module.exports = {
         //     manifest: require("../src/assets/template/vendor1.manifest.json"),
         // })
         new webpack.DefinePlugin({
-            // DEVELOPMENTZIP: JSON.stringify(false),
-            // DEVELOPMENT: JSON.stringify(false)
-            SERVERSIDERENDERING:JSON.stringify(false)
+            PROCESSENV: JSON.stringify('SSR'),
+            MOCKSERVER: JSON.stringify(false)
         }),
     ],
     // devtool: "source-map",

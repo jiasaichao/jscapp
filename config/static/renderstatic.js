@@ -18,7 +18,7 @@ strHtml.forEach((item) => {
     createFolder(curPath);
     let indextmp = fs.readFileSync(path.resolve(lujing, './config/static/template/index.ejs'), 'utf8');
 
-    let text = ejs.render(indextmp, { root: { Content: item.content, jsName:item.name } });
+    let text = ejs.render(indextmp, { root: { Content: item.content, jsName: item.name } });
     fs.writeFile(curPath, text, function (err) { });
 });
 
@@ -28,7 +28,9 @@ exists(path.resolve(lujing, `./src/assets/static`), path.resolve(lujing, `./buil
 function deleteFolder(path) {
     var files = [];
     if (fs.existsSync(path)) {
+        console.log('存在此目录');
         files = fs.readdirSync(path);
+        console.log('文件目录', files);
         files.forEach(function (file, index) {
             var curPath = path + "/" + file;
             if (fs.statSync(curPath).isDirectory()) { // recurse
@@ -37,7 +39,9 @@ function deleteFolder(path) {
                 fs.unlinkSync(curPath);
             }
         });
-        fs.rmdirSync(path);
+        // fs.rmdirSync(path);
+    } else {
+
     }
 }
 

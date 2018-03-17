@@ -8,6 +8,10 @@
 
 module.exports = {
   plugins: [
+    new webpack.DefinePlugin({
+      PROCESSENV: JSON.stringify('storybook'),
+      MOCKSERVER: JSON.stringify(true)
+    })
     // your custom plugins
   ],
   module: {

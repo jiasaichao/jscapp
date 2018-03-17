@@ -5,9 +5,9 @@ const CleanWebpackPlugin = require('clean-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const htmlPlugin = require('../htmlplugin');
 let allpage = fs.readdirSync(path.resolve(process.cwd(), './src/static'));
-let entry={};
-allpage.forEach(function(item){
-    entry[item.replace('.js', '')]='./src/static/'+item;
+let entry = {};
+allpage.forEach(function (item) {
+    entry[item.replace('.js', '')] = './src/static/' + item;
 });
 
 module.exports = {
@@ -20,9 +20,8 @@ module.exports = {
     target: 'node',
     plugins: [
         new webpack.DefinePlugin({
-            // DEVELOPMENTZIP: JSON.stringify(false),
-            // DEVELOPMENT: JSON.stringify(false)
-            SERVERSIDERENDERING:JSON.stringify(true)
+            PROCESSENV: JSON.stringify('web'),
+            MOCKSERVER: JSON.stringify(false)
         }),
         // new webpack.optimize.UglifyJsPlugin({
         //     beautify: false,    // 不美化输出

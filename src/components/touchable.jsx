@@ -105,27 +105,27 @@ export class TouchableBase extends Component {
         eventHandler(e);
     }
     mouseDown = (e) => {
-        if (Global.Device.IsMobile) return;
+        if (Global.Device.IsMobile()) return;
         this.start(e);
     }
     mouseMove = (e) => {
-        if (Global.Device.IsMobile) return;
+        if (Global.Device.IsMobile()) return;
         this.move(e);
     }
     mouseUp = (e) => {
-        if (Global.Device.IsMobile) return;
+        if (Global.Device.IsMobile()) return;
         this.end(e);
     }
     touchStart = (e) => {
-        if (!Global.Device.IsMobile) return;
+        if (!Global.Device.IsMobile()) return;
         this.start(e);
     }
     touchMove = (e) => {
-        if (!Global.Device.IsMobile) return;
+        if (!Global.Device.IsMobile()) return;
         this.move(e);
     }
     touchEnd = (e) => {
-        if (!Global.Device.IsMobile) return;
+        if (!Global.Device.IsMobile()) return;
         this.end(e);
     }
     start = (e) => {
